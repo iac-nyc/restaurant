@@ -20,7 +20,7 @@ function RenderItem(props) {
     
         const item = props.item;
         
-        if (props.isLoading) {
+    if (props.isLoading) {
         return(
                 <Loading />
         );
