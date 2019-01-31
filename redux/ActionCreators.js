@@ -66,7 +66,6 @@ export const addDishes = (dishes) => ({
     type: ActionTypes.ADD_DISHES,
     payload: dishes
 });
-
 export const fetchPromos = () => (dispatch) => {
     
     dispatch(promosLoading());
@@ -103,7 +102,6 @@ export const addPromos = (promos) => ({
     type: ActionTypes.ADD_PROMOS,
     payload: promos
 });
-
 export const fetchLeaders = () => (dispatch) => {
     
     dispatch(leadersLoading());
