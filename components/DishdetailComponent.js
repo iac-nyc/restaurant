@@ -15,7 +15,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     postFavorite: (dishId) => dispatch(postFavorite(dishId))
-})
+});
 
 
 function RenderDish(props) {
@@ -74,13 +74,7 @@ function RenderComments(props) {
 
 class Dishdetail extends Component {
 
-    constructor(props) {
-        super(props);
-       this.state = {
-            favorites: []
-        };
-    }
-    
+       
  markFavorite(dishId) {
         this.props.postFavorite(dishId);
     }   
