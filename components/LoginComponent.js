@@ -132,10 +132,9 @@ class RegisterTab extends Component {
         }
     }
     
-   getImageFromCamera = async () => {
+ getImageFromCamera = async () => {
         const cameraPermission = await Permissions.askAsync(Permissions.CAMERA);
         const cameraRollPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-
         if (cameraPermission.status === 'granted' && cameraRollPermission.status === 'granted') {
             let capturedImage = await ImagePicker.launchCameraAsync({
                 allowsEditing: true,
@@ -146,10 +145,24 @@ class RegisterTab extends Component {
                 this.processImage(capturedImage.uri);
             }
         }
+    };
 
+ getImageFromGallery = async () => {
+        const cameraPermission = await Permissions.askAsync(Permissions.CAMERA);
+        const cameraRollPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        if (cameraPermission.status === 'granted' && cameraRollPermission.status === 'granted') {
+            let capturedImage = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: true,
+                aspect: [4, 3],
+            });
+            if (!capturedImage.cancelled) {
+                console.log(capturedImage);
+                this.processImage(capturedImage.uri);
+            }
+        }
     }
 
-    processImage = async (imageUri) => {
+processImage = async (imageUri) => {
         let processedImage = await ImageManipulator.manipulate(
             imageUri, 
             [
@@ -162,7 +175,7 @@ class RegisterTab extends Component {
 
     }
     
-    static navigationOptions = {
+static navigationOptions = {
         title: 'Register',
         tabBarIcon: ({ tintColor, focused }) => (
             <Icon
@@ -173,7 +186,8 @@ class RegisterTab extends Component {
             />
           ) 
     };
- handleRegister() {
+
+handleRegister() {
         console.log(JSON.stringify(this.state));
         if (this.state.remember)
             SecureStore.setItemAsync('userinfo', JSON.stringify({username: this.state.username, password: this.state.password}))
@@ -194,6 +208,10 @@ class RegisterTab extends Component {
                         title="Camera"
                         onPress={this.getImageFromCamera}
                         />
+                     <Button
+                            title="Gallery"
+                            onPress={this.getImageFromGallery}
+                        />        
                 </View>
                 <Input
                     placeholder="Username"
@@ -267,6 +285,7 @@ const styles = StyleSheet.create({
     imageContainer: {
         flex: 1,
         flexDirection: 'row',
+        justifyContent: 'space-around',
         margin: 20
     },
     image: {
